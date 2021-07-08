@@ -56,7 +56,8 @@ if(!process.argv[2] || !process.argv[3]) {
     - maxTrying: 10000,\n
     - maxChar: 3,\n
     - number: false\n
-    `
+    \n
+    Example Usage: 'yarn start 10000 3 number'`
     )
 
 } else {
