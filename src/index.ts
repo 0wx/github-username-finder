@@ -21,9 +21,9 @@ const random = (maxChar: number, number: boolean): string => {
 const validate = async (character: string): Promise<boolean> => {
   try {
     await github.get('/' + character)
-    return true
-  } catch (error) {
     return false
+  } catch (error) {
+    return true
   }
 }
 
