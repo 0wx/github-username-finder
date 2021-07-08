@@ -1,13 +1,21 @@
 import axios, { AxiosInstance } from "axios"
+import console from "console"
 import fs from "fs"
 
 const alfabetic = "abcdefghijklmnopqrstuvwxyz"
 const numbers = "0123456789"
 const github: AxiosInstance = axios.create({ baseURL: "https://github.com" })
 
+const wait = (ms: number = 5000): Promise<void> => {
+  return new Promise<void>((resolve, reject) => {
+    setTimeout(resolve, ms)
+  })
+}
+
 const addToList = (character: string): void => {
   fs.appendFileSync('./result.txt', character + '\n')
 }
+
 const random = (maxChar: number, number: boolean): string => {
   let result = ""
   const data = number ? alfabetic + numbers : alfabetic
@@ -18,6 +26,7 @@ const random = (maxChar: number, number: boolean): string => {
 
   return result
 }
+
 const validate = async (character: string): Promise<boolean> => {
   try {
     await github.get('/' + character)
@@ -34,13 +43,18 @@ const main = async (
   number: boolean
 ): Promise<void> => {
   for (let i = 0; i < maxTryings; i++) {
+    // Wait 1 seconds so github doesnt block your request
+    await wait(1000)
     const character = random(maxChar, number)
     const isValid = await validate(character)
 
     if(isValid) {
       addToList(character)
       console.log(character, 'is valid!')
+      continue
     }
+
+    console.log(character, 'is invalid!')
   }
 }
 
