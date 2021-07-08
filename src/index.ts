@@ -50,7 +50,7 @@ const main = async (
 
     if(isValid) {
       addToList(character)
-      console.log(character, 'is valid!')
+      console.log(character, 'is valid! (maybe)')
       continue
     }
 
